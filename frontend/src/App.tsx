@@ -10,11 +10,31 @@ function App() {
 
   return (
     <BrowserRouter>
+
       <Routes>
-        <Route path='/' element={<Layout />}/>
-        <Route path='/search' element={<>Search Page</>}/>
-        <Route path='*' element={<Navigate to='/' />}/>
+
+        <Route
+          path='/'
+          element={
+            <Layout>
+              <p className="">Home Page</p>
+            </Layout>
+          }
+        />
+
+        <Route
+          path='/search'
+          element={
+            <Layout>
+              <p className="">Search Page</p>
+            </Layout>
+          }
+        />
+
+        <Route path='*' element={<Navigate to='/' />} />
+
       </Routes>
+
     </BrowserRouter>
   )
 }
