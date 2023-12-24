@@ -1,11 +1,12 @@
-import mongoose, { mongo } from 'mongoose';
+import mongoose from 'mongoose';
+import bcrypt from 'bcryptjs';
 
 export type UserType = {        // Typescript type
     _id: string;            // Small "s" for string in TS
     email: string;
     password: string;
-    firstname: string;
-    lastname: string;
+    firstName: string;
+    lastName: string;
 };
 
 const userSchema = new mongoose.Schema({
@@ -13,6 +14,13 @@ const userSchema = new mongoose.Schema({
     password: { type: String, required: true },
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
+});
+
+userSchema.pre("save", async function (next) {      // Middleware for MongoDB
+    if (this.isModified("password")) {
+        this.password = await bcrypt.hash(this.password, 8);
+    }
+    next();
 });
 
 const User = mongoose.model<UserType>("User", userSchema);
