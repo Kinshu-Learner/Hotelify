@@ -17,7 +17,6 @@ router.post("/register", async (req: Request, res: Response) => {
         if (user) {       // 400 status: Bad request
             return res.status(400).json({ message: "User already exists" });
         }
-        console.log("this point")
 
         user = new User(req.body);
         await user.save();
@@ -34,7 +33,7 @@ router.post("/register", async (req: Request, res: Response) => {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",      // Cuz we only want it on HTTPS in production build, but NOT in development build
             maxAge: 86400000,
-        })
+        });
 
         return res.sendStatus(200);
 
