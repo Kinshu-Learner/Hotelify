@@ -3,11 +3,23 @@
 import express, { Request, Response } from 'express';
 import User from '../models/user';
 import jwt from 'jsonwebtoken';
+import { check, validationResult } from 'express-validator';
 
 const router = express.Router();
 
 // This route will be on "/api/users/register" cuz in the index.ts file, we're importing this entire file and using it on "/api/users" endpoint.
-router.post("/register", async (req: Request, res: Response) => {
+router.post("/register", [
+    check("firstName", "First Name is required").isString(),
+    check("lastName", "Last Name is required").isString(),
+    check("email", "Email is required").isEmail(),
+    check("password", "Password with at least 6 characters is required").isLength({ min: 6 }),
+], async (req: Request, res: Response) => {
+
+    const errors = validationResult(req);
+
+    if(!errors.isEmpty()){
+        return res.status(400).json({ message: errors.array() });
+    }
 
     try {
         let user = await User.findOne({
