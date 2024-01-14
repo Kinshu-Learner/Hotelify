@@ -75,6 +75,10 @@ const Register = () => {
                 ></input>
             </label>
 
+            <span>
+                <button className="bg-indigo-600 text-white text-xl rounded-md py-2 px-4 font-bold hover:bg-indigo-500 duration-200">Create Account</button>
+            </span>
+
         </form>
     )
 }
