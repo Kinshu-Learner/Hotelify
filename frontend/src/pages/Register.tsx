@@ -10,10 +10,14 @@ type RegisterFormData = {
 
 const Register = () => {
 
-    const { register, watch } = useForm<RegisterFormData>();
+    const { register, watch, handleSubmit } = useForm<RegisterFormData>();
 
+    const onSubmit = handleSubmit((data)=>{
+        console.log(data);
+    })
+    
     return (
-        <form className="flex flex-col gap-5">
+        <form className="flex bg-indigo-100 p-5 rounded-lg flex-col gap-5" onSubmit={onSubmit}>
 
             <h2 className="text-3xl font-bold">Create an account</h2>
 
@@ -76,7 +80,9 @@ const Register = () => {
             </label>
 
             <span>
-                <button className="bg-indigo-600 text-white text-xl rounded-md py-2 px-4 font-bold hover:bg-indigo-500 duration-200">Create Account</button>
+                <button
+                type="submit"
+                className="bg-indigo-600 text-yellow-300 text-xl rounded-md py-2 px-4 font-bold hover:bg-indigo-500 hover:text-white duration-200">Create Account</button>
             </span>
 
         </form>
