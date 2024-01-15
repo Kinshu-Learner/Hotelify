@@ -10,14 +10,14 @@ type RegisterFormData = {
 
 const Register = () => {
 
-    const { register, watch, handleSubmit } = useForm<RegisterFormData>();
+    const { register, watch, handleSubmit, formState: {errors} } = useForm<RegisterFormData>();
 
     const onSubmit = handleSubmit((data)=>{
         console.log(data);
     })
     
     return (
-        <form className="flex bg-indigo-100 p-5 rounded-lg flex-col gap-5" onSubmit={onSubmit}>
+        <form className="flex bg-violet-100 p-5 rounded-lg flex-col gap-5" onSubmit={onSubmit}>
 
             <h2 className="text-3xl font-bold">Create an account</h2>
 
@@ -28,13 +28,19 @@ const Register = () => {
                         className="border rounded w-full py-1 px-2 font-normal focus:outline-none focus:border-indigo-500"
                         {...register("firstName", { required: "This field is required" })}
                     ></input>
+                    {errors.firstName && (
+                        <span className="text-yellow-600">{errors.firstName.message}</span>
+                    )}
                 </label>
                 <label className="text-gray-700 text-sm font-bold flex-1">
                     Last Name
                     <input
                         className="border rounded w-full py-1 px-2 font-normal focus:outline-none focus:border-indigo-500"
                         {...register("lastName", { required: "This field is required" })}
-                    ></input>
+                        ></input>
+                {errors.lastName && (
+                    <span className="text-yellow-600">{errors.lastName.message}</span>
+                )}
                 </label>
             </div>
 
@@ -44,7 +50,10 @@ const Register = () => {
                     type="email"
                     className="border rounded w-full py-1 px-2 font-normal focus:outline-none focus:border-indigo-500"
                     {...register("email", { required: "This field is required" })}
-                ></input>
+                    ></input>
+                    {errors.email && (
+                        <span className="text-yellow-600">{errors.email.message}</span>
+                    )}
             </label>
 
             <label className="text-gray-700 text-sm font-bold flex-1">
@@ -59,7 +68,10 @@ const Register = () => {
                             message: "Password must be at least 6 characters long"
                         }
                     })}
-                ></input>
+                    ></input>
+                    {errors.password && (
+                        <span className="text-yellow-600">{errors.password.message}</span>
+                    )}
             </label>
             <label className="text-gray-700 text-sm font-bold flex-1">
                 Confirm Password
@@ -77,6 +89,9 @@ const Register = () => {
                         }
                     })}
                 ></input>
+                {errors.confirmPassword && (
+                        <span className="text-yellow-600">{errors.confirmPassword.message}</span>
+                    )}
             </label>
 
             <span>
