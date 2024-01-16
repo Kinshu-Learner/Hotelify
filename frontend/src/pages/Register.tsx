@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
 
 import * as apiClient from '../api-client';
+import { useAppContext } from "../contexts/AppContext";
 
 export type RegisterFormData = {
     firstName: string;
@@ -13,21 +14,27 @@ export type RegisterFormData = {
 
 const Register = () => {
 
-    const { register, watch, handleSubmit, formState: {errors} } = useForm<RegisterFormData>();
+    const { showToast } = useAppContext();
+
+    const { register,
+        watch,
+        handleSubmit,
+        formState: { errors }
+    } = useForm<RegisterFormData>();
 
     const mutation = useMutation(apiClient.register, {
         onSuccess: () => {
-            console.log("Registration successfull!");
+            showToast({message: "Registration Successfull!", type: "SUCCESS"});
         },
         onError: (error: Error) => {
-            console.log(error.message);
+            showToast({message: error.message, type: "ERROR"});
         }
     });
 
-    const onSubmit = handleSubmit((data)=>{
+    const onSubmit = handleSubmit((data) => {
         mutation.mutate(data);
     })
-    
+
     return (
         <form className="flex bg-violet-100 p-5 rounded-lg flex-col gap-5" onSubmit={onSubmit}>
 
@@ -49,10 +56,10 @@ const Register = () => {
                     <input
                         className="border rounded w-full py-1 px-2 font-normal focus:outline-none focus:border-indigo-500"
                         {...register("lastName", { required: "This field is required" })}
-                        ></input>
-                {errors.lastName && (
-                    <span className="text-yellow-600">{errors.lastName.message}</span>
-                )}
+                    ></input>
+                    {errors.lastName && (
+                        <span className="text-yellow-600">{errors.lastName.message}</span>
+                    )}
                 </label>
             </div>
 
@@ -62,10 +69,10 @@ const Register = () => {
                     type="email"
                     className="border rounded w-full py-1 px-2 font-normal focus:outline-none focus:border-indigo-500"
                     {...register("email", { required: "This field is required" })}
-                    ></input>
-                    {errors.email && (
-                        <span className="text-yellow-600">{errors.email.message}</span>
-                    )}
+                ></input>
+                {errors.email && (
+                    <span className="text-yellow-600">{errors.email.message}</span>
+                )}
             </label>
 
             <label className="text-gray-700 text-sm font-bold flex-1">
@@ -80,10 +87,10 @@ const Register = () => {
                             message: "Password must be at least 6 characters long"
                         }
                     })}
-                    ></input>
-                    {errors.password && (
-                        <span className="text-yellow-600">{errors.password.message}</span>
-                    )}
+                ></input>
+                {errors.password && (
+                    <span className="text-yellow-600">{errors.password.message}</span>
+                )}
             </label>
             <label className="text-gray-700 text-sm font-bold flex-1">
                 Confirm Password
@@ -102,14 +109,14 @@ const Register = () => {
                     })}
                 ></input>
                 {errors.confirmPassword && (
-                        <span className="text-yellow-600">{errors.confirmPassword.message}</span>
-                    )}
+                    <span className="text-yellow-600">{errors.confirmPassword.message}</span>
+                )}
             </label>
 
             <span>
                 <button
-                type="submit"
-                className="bg-indigo-600 text-yellow-300 text-xl rounded-md py-2 px-4 font-bold hover:bg-indigo-500 hover:text-white duration-200">Create Account</button>
+                    type="submit"
+                    className="bg-indigo-600 text-yellow-300 text-xl rounded-md py-2 px-4 font-bold hover:bg-indigo-500 hover:text-white duration-200">Create Account</button>
             </span>
 
         </form>
