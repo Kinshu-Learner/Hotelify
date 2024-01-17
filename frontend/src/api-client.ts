@@ -5,6 +5,7 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;     // This is how you i
 export const register = async (formData: RegisterFormData) => {
     const response = await fetch(`${API_BASE_URL}/api/users/register`, {
         method: 'POST',
+        credentials: "include",     // Makes the request inclue the HTTP cookie, token etc in it.
         headers: {
             "Content-Type": "application/json",
         },
@@ -18,3 +19,15 @@ export const register = async (formData: RegisterFormData) => {
     }
 
 };
+
+export const validateToken =async () => {
+    const response = await fetch(`${API_BASE_URL}/api/auth/validate-token`, {
+        credentials: "include"
+    });
+
+    if(!response.ok) {
+        throw new Error ("Token invalid")
+    }
+    
+    return response.json();
+}
