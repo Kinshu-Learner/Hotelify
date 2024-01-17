@@ -8,13 +8,13 @@ type ToastProps = {
 
 const Toast = ({ message, type, onClose }: ToastProps) => {
 
-    useEffect(()=>{
-        
+    useEffect(() => {
+
         const timer = setTimeout(() => {
             onClose();
-        }, 5000);
+        }, 4000);
 
-        return ()=>{
+        return () => {
             clearTimeout(timer);
         }
 
@@ -24,13 +24,14 @@ const Toast = ({ message, type, onClose }: ToastProps) => {
         ? "fixed top-4 right-4 z-50 p-4 rounded-md bg-green-600 text-white max-w-md"
         : "fixed top-4 right-4 z-50 p-4 rounded-md bg-red-600 text-white max-w-md"
     return (
+        
         <div className={styles}>
             <div className="flex justify-center items-center">
                 <span className="text-lg font-semibold">
                     {message}
                 </span>
             </div>
-        </div>  
+        </div>
     )
 }
 
