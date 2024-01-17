@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 type ToastProps = {
     message: string;
-    type: "SUCCESS" | "ERORR";
+    type: "SUCCESS" | "ERROR";
     onClose: () => void;
 }
 
@@ -33,3 +33,5 @@ const Toast = ({ message, type, onClose }: ToastProps) => {
         </div>  
     )
 }
+
+export default Toast;
