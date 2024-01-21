@@ -1,62 +1,75 @@
-import express, { Request, Response } from 'express';
-import { check, validationResult } from 'express-validator';
-import User from '../models/user';
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
-import verifyToken from '../middleware/auth';
+import express, { Request, Response } from "express";
+import { check, validationResult } from "express-validator";
+import User from "../models/user";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import verifyToken from "../middleware/auth";
 
 const router = express.Router();
 
-router.use("/login", [
+router.use(
+  "/login",
+  [
     check("email", "Email is required").isEmail(),
-    check("password", "Password with at least 6 characters is required").isLength({ min: 6 }),
-], async (req: Request, res: Response) => {
-
+    check(
+      "password",
+      "Password with at least 6 characters is required"
+    ).isLength({ min: 6 }),
+  ],
+  async (req: Request, res: Response) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        return res.status(400).json({ message: errors.array() });
+      return res.status(400).json({ message: errors.array() });
     }
 
     const { email, password } = req.body;
 
     try {
+      const user = await User.findOne({ email });
+      if (!user) {
+        return res.status(400).json({ message: "Invalid Credentials" });
+      }
 
-        const user = await User.findOne({ email });
-        if (!user) {
-            return res.status(400).json({ message: "Invalid Credentials" });
+      const isMatch = await bcrypt.compare(password, user.password);
+      if (!isMatch) {
+        return res.status(400).json({ message: "Invalid Credentials" });
+      }
+
+      const token = jwt.sign(
+        { userId: user.id },
+        process.env.JWT_SECRET_KEY as string,
+        {
+          expiresIn: "1d",
         }
-        
-        const isMatch = await bcrypt.compare(password, user.password);
-        if(!isMatch){
-            return res.status(400).json({ message: "Invalid Credentials" });   
-        }
+      );
 
-        const token = jwt.sign(
-            { userId: user.id },
-            process.env.JWT_SECRET_KEY as string,
-            {
-                expiresIn: "1d"
-            }
-        );
+      res.cookie("auth_token", token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production", // Cuz we only want it on HTTPS in production build, but NOT in development build
+        maxAge: 86400000,
+      });
 
-        res.cookie("auth_token", token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === "production",      // Cuz we only want it on HTTPS in production build, but NOT in development build
-            maxAge: 86400000,
-        });
-
-        res.status(200).json({userId: user._id});
-
+      res.status(200).json({ userId: user._id });
     } catch (error) {
-        console.log(error);
-        res.status(500).json({ message: "Something went wrong while logging in" });
+      console.log(error);
+      res
+        .status(500)
+        .json({ message: "Something went wrong while logging in" });
     }
-
-});
+  }
+);
 
 // Just made an end point to take the HTTP cookie and check if it's valid or not using this function, which includes the use of a middleware (verifyToken).
 router.get("/validate-token", verifyToken, (req: Request, res: Response) => {
-    res.status(200).send({userId: req.userId});
+  res.status(200).send({ userId: req.userId });
+});
+
+// We're creating an empty token (""), and also expiring it at the time of creation.
+// This will make sure that the token becomes invalid, and we log out.
+router.post("/logout", (req: Request, res: Response) => {
+  res.cookie("auth_token", "", {
+    expires: new Date(0),
+  });
 });
 
 export default router;
