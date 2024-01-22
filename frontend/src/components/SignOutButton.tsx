@@ -1,13 +1,16 @@
 import { useMutation } from "react-query";
 import * as apiClient from "../api-client";
+import { useAppContext } from "../contexts/AppContext";
 
 const SignOutBUtton = () => {
+  const { showToast } = useAppContext();
+
   const mutation = useMutation(apiClient.signOut, {
     onSuccess: () => {
-      // Show toast
+      showToast({ message: "Signed Out Successfully", type: "SUCCESS" });
     },
-    onError: () => {
-      // show toast
+    onError: (error: Error) => {
+      showToast({ message: error.message, type: "ERROR" });
     },
   });
 
