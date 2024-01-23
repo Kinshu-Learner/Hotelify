@@ -1,12 +1,14 @@
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import * as apiClient from "../api-client";
 import { useAppContext } from "../contexts/AppContext";
 
 const SignOutBUtton = () => {
+  const queryClient = useQueryClient();
   const { showToast } = useAppContext();
 
   const mutation = useMutation(apiClient.signOut, {
-    onSuccess: () => {
+    onSuccess: async () => {
+      await queryClient.invalidateQueries("validateToken"); // This await will make sure to run the "validateToken" query, without refreshing the page.
       showToast({ message: "Signed Out Successfully", type: "SUCCESS" });
     },
     onError: (error: Error) => {
