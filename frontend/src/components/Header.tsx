@@ -16,7 +16,7 @@ const Header = () => {
           </Link>
         </span>
         <span className="flex">
-          {isLoggedIn ? (
+          {!isLoggedIn ? (
             <>
               <button className="sm:hidden" onClick={() => setNav(!nav)}>
                 {nav ? (
@@ -27,13 +27,13 @@ const Header = () => {
               </button>
               <div className="hidden sm:flex">
                 <Link
-                  className="p-2 pr-5 hover:bg-indigo-500 duration-200 rounded-sm font-semibold text-white"
+                  className="p-2 mr-5 hover:bg-indigo-500 duration-200 rounded font-semibold text-white"
                   to="/my-bookings"
                 >
                   My Bookings
                 </Link>
                 <Link
-                  className="p-2 pr-5 hover:bg-indigo-500 duration-200 rounded-sm font-semibold text-white"
+                  className="p-2 mr-5 hover:bg-indigo-500 duration-200 rounded font-semibold text-white"
                   to="/my-hotels"
                 >
                   My Hotels
@@ -46,13 +46,13 @@ const Header = () => {
                 } backdrop-blur-sm duration-300 ease-in-out`}
               >
                 <Link
-                  className="p-2 mb-4 hover:bg-indigo-500 duration-200 rounded-sm font-semibold text-white text-lg"
+                  className="p-2 w-52 text-center mb-4 bg-indigo-500 bg-opacity-80 duration-200 rounded font-semibold text-white "
                   to="/my-bookings"
                 >
                   My Bookings
                 </Link>
                 <Link
-                  className="p-2 mb-4 hover:bg-indigo-500 duration-200 rounded-sm font-semibold text-white text-lg"
+                  className="p-2 w-52 text-center mb-4 bg-indigo-500 bg-opacity-80 duration-200 rounded font-semibold text-white "
                   to="/my-hotels"
                 >
                   My Hotels
@@ -63,7 +63,7 @@ const Header = () => {
           ) : (
             <Link
               to="/sign-in"
-              className="p-2 rounded-sm bg-yellow-300 text-indigo-700 px-3 font-bold hover:bg-yellow-100 duration-200"
+              className="p-2 rounded bg-yellow-300 text-indigo-700 px-3 font-bold hover:bg-yellow-100 duration-200"
             >
               Sign In
             </Link>
