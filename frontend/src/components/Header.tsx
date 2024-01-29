@@ -15,7 +15,7 @@ const Header = () => {
             Hotelify<span className="text-yellow-400">.</span>com
           </Link>
         </span>
-        <span className="flex space-x-2">
+        <span className="flex">
           {isLoggedIn ? (
             <>
               <button className="sm:hidden" onClick={() => setNav(!nav)}>
@@ -25,15 +25,34 @@ const Header = () => {
                   <FaBars className="text-white" size={20} />
                 )}
               </button>
-              <div className="hidden sm:flex flex-col sm:flex-row">
+              <div className="hidden sm:flex">
                 <Link
-                  className="p-2 hover:bg-indigo-500 duration-200 rounded-sm font-semibold text-white"
+                  className="p-2 pr-5 hover:bg-indigo-500 duration-200 rounded-sm font-semibold text-white"
                   to="/my-bookings"
                 >
                   My Bookings
                 </Link>
                 <Link
-                  className="p-2 hover:bg-indigo-500 duration-200 rounded-sm font-semibold text-white"
+                  className="p-2 pr-5 hover:bg-indigo-500 duration-200 rounded-sm font-semibold text-white"
+                  to="/my-hotels"
+                >
+                  My Hotels
+                </Link>
+                <SignOutBUtton />
+              </div>
+              <div
+                className={`flex flex-col sm:hidden justify-center items-center absolute top-0 left-0 w-full ${
+                  nav ? "translate-y-20 h-[28vh]" : "-translate-y-40 h-0"
+                } backdrop-blur-sm duration-300 ease-in-out`}
+              >
+                <Link
+                  className="p-2 mb-4 hover:bg-indigo-500 duration-200 rounded-sm font-semibold text-white text-lg"
+                  to="/my-bookings"
+                >
+                  My Bookings
+                </Link>
+                <Link
+                  className="p-2 mb-4 hover:bg-indigo-500 duration-200 rounded-sm font-semibold text-white text-lg"
                   to="/my-hotels"
                 >
                   My Hotels
