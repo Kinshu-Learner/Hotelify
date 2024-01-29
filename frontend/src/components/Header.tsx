@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
 import { useAppContext } from "../contexts/AppContext";
 import SignOutBUtton from "./SignOutButton";
+import { FaBars, FaTimes } from "react-icons/fa";
+import { useState } from "react";
 
 const Header = () => {
+  const [nav, setNav] = useState(false);
   const { isLoggedIn } = useAppContext();
   return (
     <div className="bg-indigo-800 py-6">
@@ -15,19 +18,28 @@ const Header = () => {
         <span className="flex space-x-2">
           {isLoggedIn ? (
             <>
-              <Link
-                className="p-2 hover:bg-indigo-500 duration-200 rounded-sm font-semibold text-white"
-                to="/my-bookings"
-              >
-                My Bookings
-              </Link>
-              <Link
-                className="p-2 hover:bg-indigo-500 duration-200 rounded-sm font-semibold text-white"
-                to="/my-hotels"
-              >
-                My Hotels
-              </Link>
-              <SignOutBUtton />
+              <button className="sm:hidden" onClick={() => setNav(!nav)}>
+                {nav ? (
+                  <FaTimes className="text-white" size={20} />
+                ) : (
+                  <FaBars className="text-white" size={20} />
+                )}
+              </button>
+              <div className="hidden sm:flex flex-col sm:flex-row">
+                <Link
+                  className="p-2 hover:bg-indigo-500 duration-200 rounded-sm font-semibold text-white"
+                  to="/my-bookings"
+                >
+                  My Bookings
+                </Link>
+                <Link
+                  className="p-2 hover:bg-indigo-500 duration-200 rounded-sm font-semibold text-white"
+                  to="/my-hotels"
+                >
+                  My Hotels
+                </Link>
+                <SignOutBUtton />
+              </div>
             </>
           ) : (
             <Link
