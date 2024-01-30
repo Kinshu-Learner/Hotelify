@@ -3,6 +3,7 @@ import multer from "multer"; // multer is a package that handles images/forms
 import cloudinary from "cloudinary";
 import Hotel, { HotelType } from "../models/hotel";
 import verifyToken from "../middleware/auth";
+import { body } from "express-validator";
 
 const router = express.Router();
 
@@ -19,6 +20,21 @@ const upload = multer({
 router.post(
   "/",
   verifyToken,
+  [
+    body("name").notEmpty().withMessage("Name is required"),
+    body("city").notEmpty().withMessage("City is required"),
+    body("country").notEmpty().withMessage("Country is required"),
+    body("description").notEmpty().withMessage("Description is required"),
+    body("type").notEmpty().withMessage("Hotel Type is required"),
+    body("pricePerNight")
+      .notEmpty()
+      .isNumeric()
+      .withMessage("Price Per Night is required and must be a number"),
+    body("facilities")
+      .notEmpty()
+      .isArray()
+      .withMessage("Facilities are required"),
+  ],
   upload.array("imageFiles", 6), // telling multer to expect a form property called "imageFiles", which is an array upto 6 images.
   async (req: Request, res: Response) => {
     try {
@@ -53,3 +69,5 @@ router.post(
     }
   }
 );
+
+export default router;
