@@ -16,7 +16,7 @@ const Header = () => {
           </Link>
         </span>
         <span className="flex">
-          {!isLoggedIn ? (
+          {isLoggedIn ? (
             <>
               <button className="sm:hidden" onClick={() => setNav(!nav)}>
                 {nav ? (

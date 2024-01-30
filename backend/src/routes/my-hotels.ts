@@ -36,6 +36,9 @@ router.post(
       // 2. if the upload was successful, add the URLs to the new hotel
       // 3. save the new hotel in database
       // 4. return 201 status
-    } catch (error) {}
+    } catch (error) {
+      console.log("Error creating hotel: ", error);
+      res.status(500).json({ message: "Something went wrong" });
+    }
   }
 );
