@@ -1,6 +1,8 @@
 import express, { Request, Response } from "express";
 import multer from "multer"; // multer is a package that handles images/forms
 import cloudinary from "cloudinary";
+import Hotel, { HotelType } from "../models/hotel";
+import verifyToken from "../middleware/auth";
 
 const router = express.Router();
 
@@ -16,11 +18,12 @@ const upload = multer({
 //    api/my-hotels
 router.post(
   "/",
+  verifyToken,
   upload.array("imageFiles", 6), // telling multer to expect a form property called "imageFiles", which is an array upto 6 images.
   async (req: Request, res: Response) => {
     try {
       const imageFiles = req.files as Express.Multer.File[]; // to get the image data separately
-      const newHotel = req.body; // to get the rest of the form data
+      const newHotel: HotelType = req.body; // to get the rest of the form data
 
       // 1. Upload the images to cloudinary
       const uploadPromises = imageFiles.map(async (image) => {
@@ -34,8 +37,16 @@ router.post(
       const imageURLs = await Promise.all(uploadPromises); // The "uploadPromises" will contain promises of all the images. We want to first await all of them first, and then move on with the next steps.
 
       // 2. if the upload was successful, add the URLs to the new hotel
+      newHotel.imageUrls = imageURLs;
+      newHotel.lastUpdated = new Date();
+      newHotel.userId = req.userId;
+
       // 3. save the new hotel in database
+      const hotel = new Hotel(newHotel); // Created a new hotel using the "Hotel" schema and "newHotel" data.
+      await hotel.save();
+
       // 4. return 201 status
+      res.status(201).send(hotel);
     } catch (error) {
       console.log("Error creating hotel: ", error);
       res.status(500).json({ message: "Something went wrong" });
