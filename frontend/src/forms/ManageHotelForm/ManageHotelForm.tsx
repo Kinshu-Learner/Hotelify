@@ -1,3 +1,6 @@
+import { FormProvider, useForm } from "react-hook-form";
+import DetailsSection from "./DetailsSection";
+
 export type HotelFormData = {
   name: string;
   city: string;
@@ -7,13 +10,22 @@ export type HotelFormData = {
   pricePerNight: number;
   starRating: number;
   facilities: string[];
-  imageFiles: FileList;
+  imageFiles: FileList; // Note that it's not a stirng array here
   adultCount: number;
   childCount: number;
 };
 
 const ManageHotelForm = () => {
-  return <form></form>;
+  const formMethods = useForm<HotelFormData>(); // Instead of destructuring register etc fns from useForm, we're taking all of those properties and assigning then to a single variable (formMethods).
+  return (
+    // Spreading all the properties (in formMethods) as children to the FormProvider.
+    // We're technically defining a formContext here.
+    <FormProvider {...formMethods}>
+      <form className="flex bg-violet-100 p-5 rounded-lg flex-col gap-5">
+        <DetailsSection />
+      </form>
+    </FormProvider>
+  );
 };
 
 export default ManageHotelForm;
