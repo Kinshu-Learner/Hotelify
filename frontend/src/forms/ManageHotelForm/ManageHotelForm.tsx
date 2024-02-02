@@ -23,8 +23,26 @@ const ManageHotelForm = () => {
   const formMethods = useForm<HotelFormData>(); // Instead of destructuring register etc fns from useForm, we're taking all of those properties and assigning then to a single variable (formMethods).
   const { handleSubmit } = formMethods;
 
-  const onSubmit = handleSubmit((formData: HotelFormData) => {
-    console.log(formData);
+  const onSubmit = handleSubmit((formDataJson: HotelFormData) => {
+    const formData = new FormData();
+    formData.append("name", formDataJson.name);
+    formData.append("city", formDataJson.city);
+    formData.append("country", formDataJson.country);
+    formData.append("description", formDataJson.description);
+    formData.append("type", formDataJson.type);
+    formData.append("pricePerNight", formDataJson.pricePerNight.toString()); // This is cuz FormData() only works with Strings, and pricePerNight is a number.
+    formData.append("starRating", formDataJson.starRating.toString());
+    formData.append("adultCount", formDataJson.adultCount.toString());
+    formData.append("childCount", formDataJson.childCount.toString());
+
+    formDataJson.facilities.forEach((facility, index) => {
+      formData.append(`facilities[${index}]`, facility);
+    });
+
+    // This is cuz "FileList" type doesn't let us use forEach etc, so we first make an array out of it.
+    Array.from(formDataJson.imageFiles).forEach((imageFile) => {
+      formData.append(`imageFiles`, imageFile);
+    });
   });
   return (
     // Spreading all the properties (in formMethods) as children to the FormProvider.
