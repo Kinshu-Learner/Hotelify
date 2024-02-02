@@ -1,5 +1,6 @@
 import { FormProvider, useForm } from "react-hook-form";
 import DetailsSection from "./DetailsSection";
+import TypeSection from "./TypeSection";
 
 export type HotelFormData = {
   name: string;
@@ -21,8 +22,9 @@ const ManageHotelForm = () => {
     // Spreading all the properties (in formMethods) as children to the FormProvider.
     // We're technically defining a formContext here.
     <FormProvider {...formMethods}>
-      <form className="flex bg-violet-100 p-5 rounded-lg flex-col gap-5">
+      <form className="flex bg-violet-100 p-5 rounded-lg flex-col gap-10">
         <DetailsSection />
+        <TypeSection />
       </form>
     </FormProvider>
   );
