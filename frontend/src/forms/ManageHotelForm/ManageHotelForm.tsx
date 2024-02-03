@@ -4,6 +4,7 @@ import TypeSection from "./TypeSection";
 import FacilitiesSection from "./FacilitiesSection";
 import GuestsSection from "./GuestsSection";
 import ImagesSection from "./ImagesSection";
+import Loader from "../../components/Loader";
 
 export type HotelFormData = {
   name: string;
@@ -19,7 +20,12 @@ export type HotelFormData = {
   childCount: number;
 };
 
-const ManageHotelForm = () => {
+type Props = {
+  onSave: (hotelFormData: FormData) => void;
+  isLoading: boolean;
+};
+
+const ManageHotelForm = ({ onSave, isLoading }: Props) => {
   const formMethods = useForm<HotelFormData>(); // Instead of destructuring register etc fns from useForm, we're taking all of those properties and assigning then to a single variable (formMethods).
   const { handleSubmit } = formMethods;
 
@@ -43,6 +49,8 @@ const ManageHotelForm = () => {
     Array.from(formDataJson.imageFiles).forEach((imageFile) => {
       formData.append(`imageFiles`, imageFile);
     });
+
+    onSave(formData);
   });
   return (
     // Spreading all the properties (in formMethods) as children to the FormProvider.
@@ -59,10 +67,13 @@ const ManageHotelForm = () => {
         <ImagesSection />
         <span className="flex justify-end">
           <button
+            disabled={isLoading}
             type="submit"
-            className="bg-indigo-600 text-white text-xl rounded py-2 px-6 font-bold hover:bg-indigo-500 hover:text-yellow-300 duration-200"
+            className="bg-indigo-600 text-white text-xl rounded h-10 w-24 font-bold hover:bg-indigo-500 hover:text-yellow-300 duration-200 disabled:bg-gray-500"
           >
-            Save
+            <div className="flex text-center items-center justify-center">
+              {isLoading ? <Loader /> : "Save"}
+            </div>
           </button>
         </span>
       </form>
