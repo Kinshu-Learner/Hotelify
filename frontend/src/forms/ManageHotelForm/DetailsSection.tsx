@@ -79,7 +79,7 @@ const DetailsSection = () => {
           {...register("starRating", {
             required: "This field is required",
           })}
-          className="border rounded w-full p-2 text-gray-700 font-normal"
+          className="border rounded w-full p-2 text-gray-700 font-normal focus:outline-none focus:border-indigo-500"
         >
           <option value="" className="text-sm font-bold">
             Select a Rating
