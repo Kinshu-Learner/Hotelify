@@ -58,7 +58,7 @@ test("should allow user to add a hotel", async ({ page }) => {
 test("should display hotels", async ({ page }) => {
   await page.goto(`${UI_URL}/my-hotels`);
 
-  await expect(page.getByText("Test Hotel")).toBeVisible();
+  await expect(page.getByText("Test Hotel")).toBeVisible(); // Test only works if these texts are present only once on the entire screen
   await expect(page.getByText("Test Description for")).toBeVisible();
 
   await expect(page.getByText("Test City, Test Country")).toBeVisible();
