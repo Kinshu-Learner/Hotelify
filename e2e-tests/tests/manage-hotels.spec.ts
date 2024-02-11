@@ -32,7 +32,7 @@ test("should allow user to add a hotel", async ({ page }) => {
 
   await page
     .locator('[name="description"]')
-    .fill("This is a Test Description for the Test Hotel");
+    .fill("This is a Test Description for the Test H0tel");
   await page.locator('[name="pricePerNight"]').fill("100");
 
   await page.selectOption('select[name="starRating"]', "3");
