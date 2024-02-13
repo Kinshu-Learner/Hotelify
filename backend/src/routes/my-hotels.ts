@@ -87,6 +87,7 @@ router.get("/:id", verifyToken, async (req: Request, res: Response) => {
       _id: ID,
       userId: req.userId,
     });
+    res.json(hotel);
   } catch (error) {
     res.status(500).json({ message: "Error Fetching the Hotel" });
   }
