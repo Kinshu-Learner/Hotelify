@@ -5,6 +5,7 @@ import FacilitiesSection from "./FacilitiesSection";
 import GuestsSection from "./GuestsSection";
 import ImagesSection from "./ImagesSection";
 import Loader from "../../components/Loader";
+import { HotelType } from "../../shared/types";
 
 export type HotelFormData = {
   name: string;
@@ -21,11 +22,12 @@ export type HotelFormData = {
 };
 
 type Props = {
+  hotel: HotelType;
   onSave: (hotelFormData: FormData) => void;
   isLoading: boolean;
 };
 
-const ManageHotelForm = ({ onSave, isLoading }: Props) => {
+const ManageHotelForm = ({ onSave, isLoading, hotel }: Props) => {
   const formMethods = useForm<HotelFormData>(); // Instead of destructuring register etc fns from useForm, we're taking all of those properties and assigning then to a single variable (formMethods).
   const { handleSubmit } = formMethods;
 
