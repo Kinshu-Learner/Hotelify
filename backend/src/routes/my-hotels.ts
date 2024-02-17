@@ -84,6 +84,7 @@ router.get("/:id", verifyToken, async (req: Request, res: Response) => {
   const ID = req.params.id.toString();
   try {
     const hotel = await Hotel.findOne({
+      // If we use "find" here instead of findOne, we'll get back an array as a response, as opposed to a single object.
       _id: ID,
       userId: req.userId,
     });
