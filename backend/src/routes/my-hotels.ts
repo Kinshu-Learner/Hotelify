@@ -83,7 +83,7 @@ router.get("/", verifyToken, async (req: Request, res: Response) => {
 router.get("/:id", verifyToken, async (req: Request, res: Response) => {
   const ID = req.params.id.toString();
   try {
-    const hotel = await Hotel.find({
+    const hotel = await Hotel.findOne({
       _id: ID,
       userId: req.userId,
     });
