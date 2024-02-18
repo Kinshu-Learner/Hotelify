@@ -48,12 +48,14 @@ const Header = () => {
                 <Link
                   className="p-2 w-52 text-center mb-4 bg-indigo-500 bg-opacity-80 duration-200 rounded font-semibold text-white "
                   to="/my-bookings"
+                  onClick={() => setNav(!nav)}
                 >
                   My Bookings
                 </Link>
                 <Link
                   className="p-2 w-52 text-center mb-4 bg-indigo-500 bg-opacity-80 duration-200 rounded font-semibold text-white "
                   to="/my-hotels"
+                  onClick={() => setNav(!nav)}
                 >
                   My Hotels
                 </Link>
