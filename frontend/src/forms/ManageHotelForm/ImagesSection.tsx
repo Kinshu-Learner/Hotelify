@@ -6,11 +6,15 @@ const ImagesSection = () => {
     register,
     formState: { errors },
     watch,
+<<<<<<< HEAD
     setValue,
+=======
+>>>>>>> 224c7722908a481bacd504616206694bfbc8bc0b
   } = useFormContext<HotelFormData>();
 
   const existingImageUrls = watch("imageUrls");
 
+<<<<<<< HEAD
   const handleDelete = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     imageUrl: string
@@ -23,6 +27,8 @@ const ImagesSection = () => {
     );
   };
 
+=======
+>>>>>>> 224c7722908a481bacd504616206694bfbc8bc0b
   return (
     <div className="">
       <h2 className="text-2xl font-bold mb-3">Images</h2>
