@@ -6,29 +6,22 @@ const ImagesSection = () => {
     register,
     formState: { errors },
     watch,
-<<<<<<< HEAD
     setValue,
-=======
->>>>>>> 224c7722908a481bacd504616206694bfbc8bc0b
   } = useFormContext<HotelFormData>();
 
   const existingImageUrls = watch("imageUrls");
 
-<<<<<<< HEAD
   const handleDelete = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     imageUrl: string
   ) => {
     event.preventDefault();
-
     setValue(
       "imageUrls",
       existingImageUrls.filter((url) => url !== imageUrl) // Here, we're basically updating the existingImageUrls array, by only keeping those Urls which are not the Url that we're about to delete.
     );
   };
 
-=======
->>>>>>> 224c7722908a481bacd504616206694bfbc8bc0b
   return (
     <div className="">
       <h2 className="text-2xl font-bold mb-3">Images</h2>
