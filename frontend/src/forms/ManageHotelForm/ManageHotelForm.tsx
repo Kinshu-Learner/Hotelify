@@ -6,6 +6,7 @@ import GuestsSection from "./GuestsSection";
 import ImagesSection from "./ImagesSection";
 import Loader from "../../components/Loader";
 import { HotelType } from "../../shared/types";
+import { useEffect } from "react";
 
 export type HotelFormData = {
   name: string;
@@ -17,6 +18,7 @@ export type HotelFormData = {
   starRating: number;
   facilities: string[];
   imageFiles: FileList; // Note that it's not a stirng array here
+  imageUrls: string[];
   adultCount: number;
   childCount: number;
 };
@@ -29,7 +31,11 @@ type Props = {
 
 const ManageHotelForm = ({ onSave, isLoading, hotel }: Props) => {
   const formMethods = useForm<HotelFormData>(); // Instead of destructuring register etc fns from useForm, we're taking all of those properties and assigning then to a single variable (formMethods).
-  const { handleSubmit } = formMethods;
+  const { handleSubmit, reset } = formMethods;
+
+  useEffect(() => {
+    reset(hotel);
+  }, [hotel, reset]);
 
   const onSubmit = handleSubmit((formDataJson: HotelFormData) => {
     const formData = new FormData();
