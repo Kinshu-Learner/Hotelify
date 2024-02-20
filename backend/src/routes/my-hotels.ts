@@ -118,6 +118,8 @@ router.put(
       ];
 
       await hotel.save();
+
+      res.send(201).json(hotel);
     } catch (error) {
       res.status(500).json({ message: "Something went wrong" });
     }
