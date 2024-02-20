@@ -43,15 +43,7 @@ router.post(
       const newHotel: HotelType = req.body; // to get the rest of the form data
 
       // 1. Upload the images to cloudinary
-      const uploadPromises = imageFiles.map(async (image) => {
-        // Looping over all of the images we got in input in "imageFiles".
-        const b64 = Buffer.from(image.buffer).toString("base64"); // Creating a base 64 buffer from each image.
-        let dataURI = "data:" + image.mimetype + ";base64," + b64; // Creating a string to identify the image separately from one another while uploading. mimetype = jpeg/png etc.
-        const res = await cloudinary.v2.uploader.upload(dataURI); // Uploading the image to cloudinary using the string that we just created.
-        return res.url; // Finally returning the url of the uploaded image.
-      });
-
-      const imageURLs = await Promise.all(uploadPromises); // The "uploadPromises" will contain promises of all the images. We want to first await all of them first, and then move on with the next steps.
+      const imageURLs = await uploadImages(imageFiles); // The "uploadPromises" will contain promises of all the images. We want to first await all of them first, and then move on with the next steps.
 
       // 2. if the upload was successful, add the URLs to the new hotel
       newHotel.imageUrls = imageURLs;
@@ -117,10 +109,32 @@ router.put(
       }
 
       const files = req.files as Express.Multer.File[];
+
+      const updatedImageUrls = await uploadImages(files);
+
+      hotel.imageUrls = [
+        ...updatedImageUrls,
+        ...(updatedHotel.imageUrls || []), // Here, we're handling a case where the user has decided to delete all the existing images, thus || [].
+      ];
+
+      await hotel.save();
     } catch (error) {
       res.status(500).json({ message: "Something went wrong" });
     }
   }
 );
+
+async function uploadImages(imageFiles: Express.Multer.File[]) {
+  const uploadPromises = imageFiles.map(async (image) => {
+    // Looping over all of the images we got in input in "imageFiles".
+    const b64 = Buffer.from(image.buffer).toString("base64"); // Creating a base 64 buffer from each image.
+    let dataURI = "data:" + image.mimetype + ";base64," + b64; // Creating a string to identify the image separately from one another while uploading. mimetype = jpeg/png etc.
+    const res = await cloudinary.v2.uploader.upload(dataURI); // Uploading the image to cloudinary using the string that we just created.
+    return res.url; // Finally returning the url of the uploaded image.
+  });
+
+  const imageURLs = await Promise.all(uploadPromises); // The "uploadPromises" will contain promises of all the images. We want to first await all of them first, and then move on with the next steps.
+  return imageURLs;
+}
 
 export default router;
