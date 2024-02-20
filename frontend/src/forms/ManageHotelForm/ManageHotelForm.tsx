@@ -24,7 +24,7 @@ export type HotelFormData = {
 };
 
 type Props = {
-  hotel: HotelType;
+  hotel?: HotelType;
   onSave: (hotelFormData: FormData) => void;
   isLoading: boolean;
 };
@@ -39,6 +39,12 @@ const ManageHotelForm = ({ onSave, isLoading, hotel }: Props) => {
 
   const onSubmit = handleSubmit((formDataJson: HotelFormData) => {
     const formData = new FormData();
+
+    if (hotel) {
+      // If we're on editHotel, we'll have a hotel prop. In that case, we want to add the hotelId to the formData, so that we can access that hotel by its ID on the backend request.
+      formData.append("hotelId", hotel._id);
+    }
+
     formData.append("name", formDataJson.name);
     formData.append("city", formDataJson.city);
     formData.append("country", formDataJson.country);
@@ -52,6 +58,13 @@ const ManageHotelForm = ({ onSave, isLoading, hotel }: Props) => {
     formDataJson.facilities.forEach((facility, index) => {
       formData.append(`facilities[${index}]`, facility);
     });
+
+    // This is for the edit hotel functionality
+    if (formDataJson.imageUrls) {
+      formDataJson.imageUrls.forEach((url, index) => {
+        formData.append(`imageUrls[${index}]`, url);
+      });
+    }
 
     // This is cuz "FileList" type doesn't let us use forEach etc, so we first make an array out of it.
     Array.from(formDataJson.imageFiles).forEach((imageFile) => {
