@@ -6,29 +6,22 @@ const ImagesSection = () => {
     register,
     formState: { errors },
     watch,
-<<<<<<< HEAD
     setValue,
-=======
->>>>>>> 224c7722908a481bacd504616206694bfbc8bc0b
   } = useFormContext<HotelFormData>();
 
   const existingImageUrls = watch("imageUrls");
 
-<<<<<<< HEAD
   const handleDelete = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     imageUrl: string
   ) => {
     event.preventDefault();
-
     setValue(
       "imageUrls",
       existingImageUrls.filter((url) => url !== imageUrl) // Here, we're basically updating the existingImageUrls array, by only keeping those Urls which are not the Url that we're about to delete.
     );
   };
 
-=======
->>>>>>> 224c7722908a481bacd504616206694bfbc8bc0b
   return (
     <div className="">
       <h2 className="text-2xl font-bold mb-3">Images</h2>
@@ -39,7 +32,10 @@ const ImagesSection = () => {
             {existingImageUrls.map((url) => (
               <div className="relative group">
                 <img src={url} className="min-h-full object-cover rounded" />
-                <button className="absolute inset-0 flex items-center justify-center rounded bg-indigo-900 bg-opacity-50 opacity-0 group-hover:opacity-100 text-white duration-200 font-semibold">
+                <button
+                  onClick={(event) => handleDelete(event, url)}
+                  className="absolute inset-0 flex items-center justify-center rounded bg-indigo-900 bg-opacity-50 opacity-0 group-hover:opacity-100 text-white duration-200 font-semibold"
+                >
                   Delete
                 </button>
               </div>
@@ -53,7 +49,8 @@ const ImagesSection = () => {
           className="w-full text-gray-700 font-normal"
           {...register("imageFiles", {
             validate: (imageFiles) => {
-              const totalLength = imageFiles.length;
+              const totalLength =
+                imageFiles.length + (existingImageUrls?.length || 0); // This is so that if user is editing hotel, and they've already uploaded some images, he total count still shouldn't go more than 6.
 
               if (totalLength === 0) {
                 return "At least one image should be added";
