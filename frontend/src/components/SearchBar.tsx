@@ -3,8 +3,10 @@ import { useSearchContext } from "../contexts/SearchContext";
 import { MdTravelExplore } from "react-icons/md";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { useNavigate } from "react-router-dom";
 
 const SearchBar = () => {
+  const navigate = useNavigate();
   const search = useSearchContext();
 
   const [destination, setDestination] = useState<string>(search.destination);
@@ -22,6 +24,7 @@ const SearchBar = () => {
       adultCount,
       childCount
     );
+    navigate("/search");
   };
 
   const minDate = new Date();
@@ -61,7 +64,7 @@ const SearchBar = () => {
           <input
             type="number"
             className="w-full p-1 focus:outline-none bg-violet-50 font-bold"
-            min={1}
+            min={0}
             max={20}
             value={childCount}
             onChange={(event) => setChildCount(parseInt(event.target.value))}
