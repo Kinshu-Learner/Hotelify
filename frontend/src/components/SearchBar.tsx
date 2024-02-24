@@ -72,7 +72,7 @@ const SearchBar = () => {
         </label>
       </div>
 
-      <div className="">
+      <div className="focus-within:outline rounded focus-within:outline-1 focus-within:outline-indigo-500">
         <DatePicker
           selected={checkIn}
           onChange={(date) => setCheckIn(date as Date)}
@@ -82,11 +82,11 @@ const SearchBar = () => {
           minDate={minDate}
           maxDate={maxDate}
           placeholderText="Check-in Date"
-          className="w-2/3 sm:w-full min-w-full bg-violet-50 rounded p-2 focus:outline-none"
+          className="w-2/3 sm:w-full min-w-full bg-violet-50 p-2 rounded focus:outline-none"
           wrapperClassName="min-w-full"
         />
       </div>
-      <div className="">
+      <div className="focus-within:outline rounded focus-within:outline-1 focus-within:outline-indigo-500">
         <DatePicker
           selected={checkOut}
           onChange={(date) => setCheckOut(date as Date)}
