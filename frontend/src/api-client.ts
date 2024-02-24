@@ -137,7 +137,7 @@ export const searchHotels = async (
   queryParmas.append("page", searchParams.page || "");
 
   const response = await fetch(
-    `${API_BASE_URL}/api/hotels/search/${queryParmas}`
+    `${API_BASE_URL}/api/hotels/search?${queryParmas}`
   );
 
   if (!response.ok) {
