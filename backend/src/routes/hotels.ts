@@ -59,6 +59,36 @@ const constructSearchQuery = (queryParams: any) => {
     };
   }
 
+  if (queryParams.facilities) {
+    constructedQuery.facilities = {
+      $all: Array.isArray(queryParams.facilities) // Matches results that matches "all" facilities.
+        ? queryParams.facilities // ensures that the value assigned to $all is always an array. If queryParams.facilities is already an array, it uses it as is. Otherwise, it creates a new array containing "queryParams.facilities". This is necessary because sometimes users might provide a single facility as a string instead of an array.
+        : [queryParams.facilities],
+    };
+  }
+
+  if (queryParams.types) {
+    constructedQuery.type = {
+      $in: Array.isArray(queryParams.types) // "$in" cuz a hotel can only have 1 type, but the user can enter multiple in search.
+        ? queryParams.types
+        : [queryParams.types],
+    };
+  }
+
+  if (queryParams.stars) {
+    const starRatings = Array.isArray(queryParams.stars)
+      ? queryParams.stars.map((star: string) => parseInt(star)) // Each star rating will be a string, converting all to int.
+      : parseInt(queryParams.stars); // If only one star rating is present, converting it to int.
+
+    constructedQuery.starRating = { $in: starRatings };
+  }
+
+  if (queryParams.maxPrice) {
+    constructedQuery.pricePerNight = {
+      $lte: parseInt(queryParams.maxPrice).toString(),
+    };
+  }
+
   return constructedQuery;
 };
 
