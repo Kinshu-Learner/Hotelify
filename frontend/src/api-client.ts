@@ -139,6 +139,7 @@ export const searchHotels = async (
   queryParams.append("checkOut", searchParams.checkOut || "");
   queryParams.append("adultCount", searchParams.adultCount || "");
   queryParams.append("childCount", searchParams.childCount || "");
+  queryParams.append("page", searchParams.page || "");
 
   queryParams.append("maxPrice", searchParams.maxPrice || "");
   queryParams.append("sortOption", searchParams.sortOption || "");
