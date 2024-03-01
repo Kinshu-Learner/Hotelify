@@ -17,6 +17,7 @@ const Search = () => {
   const [selectedHotelTypes, setSelectedHotelTypes] = useState<string[]>([]);
   const [selectedFacilities, setSelectedFacilities] = useState<string[]>([]);
   const [selectedPrice, setSelectedPrice] = useState<number | undefined>();
+  const [sortOption, setSortOption] = useState<string>("");
 
   const searchParams = {
     destination: search.destination,
@@ -29,6 +30,7 @@ const Search = () => {
     types: selectedHotelTypes,
     facilities: selectedFacilities,
     maxPrice: selectedPrice?.toString(),
+    sortOption,
   };
 
   const { data: hotelData } = useQuery(["searchHotels", searchParams], () =>
@@ -104,7 +106,20 @@ const Search = () => {
             {search.destination ? ` in ${search.destination}` : ""}
           </span>
 
-          {/* TODO sort options */}
+          <select
+            className="p-2 border focus:outline-none focus:border-indigo-600 rounded-md"
+            value={sortOption}
+            onChange={(event) => setSortOption(event.target.value)}
+          >
+            <option value="">Sort By</option>
+            <option value="starRating">Star Rating</option>
+            <option value="pricePerNightAsc">
+              Price per Night (low to high)
+            </option>
+            <option value="pricePerNightDesc">
+              Price per Night (high to low)
+            </option>
+          </select>
         </div>
 
         {hotelData?.data.map((hotel) => (
