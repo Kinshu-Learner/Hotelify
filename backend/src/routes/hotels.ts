@@ -18,7 +18,7 @@ router.get("/search", async (req: Request, res: Response) => {
       case "pricePerNightAsc":
         sortOptions = { pricePerNight: 1 };
         break;
-      case "pricePerNightDsc":
+      case "pricePerNightDesc":
         sortOptions = { pricePerNight: -1 };
         break;
     }
