@@ -9,7 +9,7 @@ const MyHotels = () => {
     "fetchMyHotels",
     apiClient.fetchMyHotels,
     {
-      onError: () => {},
+      onError: () => { },
     }
   );
 
@@ -31,29 +31,29 @@ const MyHotels = () => {
       </span>
       <div className="flex flex-col gap-8">
         {hotelData.map((hotel) => (
-          <div className="flex flex-col justify-between bg-violet-100 rounded-lg p-8 gap-5">
+          <div className="flex flex-col justify-between bg-indigo-100 rounded-lg p-8 gap-5">
             <h2 className="text-2xl font-bold">{hotel.name}</h2>
 
             <div className="whitespace-pre-line">{hotel.description}</div>
 
             <div className="grid sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-5 gap-2">
-              <div className="border bg-violet-200 border-slate-300 rounded p-3 flex items-center">
+              <div className="border bg-indigo-200 border-slate-300 rounded p-3 flex items-center">
                 <BsMap className="mr-1" />
                 {hotel.city}, {hotel.country}
               </div>
-              <div className="border bg-violet-200 border-slate-300 rounded p-3 flex items-center">
+              <div className="border bg-indigo-200 border-slate-300 rounded p-3 flex items-center">
                 <BsBuilding className="mr-1" />
                 {hotel.type}
               </div>
-              <div className="border bg-violet-200 border-slate-300 rounded p-3 flex items-center">
+              <div className="border bg-indigo-200 border-slate-300 rounded p-3 flex items-center">
                 <BiMoney className="mr-1" />
                 Rs. {hotel.pricePerNight} per night
               </div>
-              <div className="border bg-violet-200 border-slate-300 rounded p-3 flex items-center">
+              <div className="border bg-indigo-200 border-slate-300 rounded p-3 flex items-center">
                 <BiHotel className="mr-1" />
                 {hotel.adultCount} adults, {hotel.childCount} children
               </div>
-              <div className="border bg-violet-200 border-slate-300 rounded p-3 flex items-center">
+              <div className="border bg-indigo-200 border-slate-300 rounded p-3 flex items-center">
                 <BiStar className="mr-1" />
                 {hotel.starRating} Star Rating
               </div>
