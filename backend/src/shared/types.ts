@@ -1,3 +1,12 @@
+export type UserType = {
+  // Typescript type
+  _id: string; // Small "s" for string in TS
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+};
+
 export type HotelType = {
   _id: string;
   userId: string;
