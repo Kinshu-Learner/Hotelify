@@ -39,10 +39,10 @@ const BookingForm = ({ currentUser, paymentIntent }: Props) => {
   const { mutate: bookRoom, isLoading } = useMutation(
     apiClient.createRoomBooking,
     {
-      onSuccess: (data) => {
+      onSuccess: () => {
         showToast({ message: "Booking Saved!", type: "SUCCESS" });
       },
-      onError: (error) => {
+      onError: () => {
         showToast({ message: "Error saving booking", type: "ERROR" });
       },
     }

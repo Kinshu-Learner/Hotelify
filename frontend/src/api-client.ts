@@ -215,12 +215,12 @@ export const createRoomBooking = async (formData: BookingFormData) => {
   const response = await fetch(
     `${API_BASE_URL}/api/hotels/${formData.hotelId}/bookings`,
     {
-      credentials: "include",
       method: "POST",
-      body: JSON.stringify(formData),
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: "include",
+      body: JSON.stringify(formData),
     }
   );
 

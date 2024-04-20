@@ -70,6 +70,7 @@ const Booking = () => {
           options={{
             clientSecret: paymentIntentData.clientSecret,
           }}
+          key={paymentIntentData.clientSecret}
         >
           <BookingForm
             currentUser={currentUser}
