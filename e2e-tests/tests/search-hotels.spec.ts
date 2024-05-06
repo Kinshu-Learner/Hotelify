@@ -102,12 +102,16 @@ test("should book hotel", async ({ page }) => {
   await page.getByRole("button", { name: "Confirm Booking" }).click();
 
   // Wait for the Stripe 3D Secure 2 Test Page iframe to be available
-  const stripeFrame2 = await await page
-    .frameLocator('iframe[name^="stripe_3ds2_or_"]')
-    .first();
+
+  // const stripeFrame2 = await await page
+  //   .frameLocator('iframe[name^="stripe_3ds2_or_"]')
+  //   .first();
 
   // Click the "Complete" button on the Stripe 3D Secure 2 Test Page
-  await stripeFrame2.getByRole("button", { name: "COMPLETE" }).click();
+  await stripeFrame.getByRole("link", { name: "COMPLETE" }).click();
 
   await expect(page.getByText("Booking Saved!")).toBeVisible();
+
+  await page.getByRole("link", { name: "My Bookings" }).click();
+  await expect(page.getByText("Test Hotel")).toBeVisible();
 });
