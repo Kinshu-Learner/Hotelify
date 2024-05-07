@@ -13,6 +13,8 @@ const Search = () => {
   const search = useSearchContext();
   const [page, setPage] = useState<number>(1);
 
+  const [showFilters, setShowFilters] = useState(true);
+
   const [selectedStars, setSelectedStars] = useState<string[]>([]);
   const [selectedHotelTypes, setSelectedHotelTypes] = useState<string[]>([]);
   const [selectedFacilities, setSelectedFacilities] = useState<string[]>([]);
@@ -73,31 +75,44 @@ const Search = () => {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-[250px_1fr] gap-5">
-      <div className="rounded-lg border border-slate-300 p-5 h-fit sticky top-10">
-        <div className="space-y-5">
-          <h3 className="text-lg font-semibold border-b border-slate-300 pb-5">
-            Filter by:
-          </h3>
-          <StarRatingFilter
-            selectedStars={selectedStars}
-            onChange={handleStarsChange}
-          />
-          <HotelTypesFilter
-            selectedHotelTypes={selectedHotelTypes}
-            onChange={handleHotelTypeChange}
-          />
-          <FacilitiesFilter
-            selectedFacilities={selectedFacilities}
-            onChange={handleFacilitiesChange}
-          />
-          <PriceFilter
-            selectedPrice={selectedPrice}
-            onChange={(value?: number) => {
-              setSelectedPrice(value);
-            }}
-          />
+      <div className="w-full lg:hidden">
+        <div
+          className="cursor-pointer mx-4 border border-indigo-600 font-semibold bg-orange-50 rounded-md px-2 py-1 text-center"
+          onClick={() => {
+            setShowFilters(!showFilters);
+          }}
+        >
+          {showFilters ? "Hide filters" : "Show Filters"}
         </div>
       </div>
+
+      {showFilters && (
+        <div className="rounded-lg border border-slate-300 p-5 h-fit lg:sticky top-10">
+          <div className="space-y-2">
+            <h3 className="text-lg font-semibold border-b border-slate-300 pb-5">
+              Filter by:
+            </h3>
+            <StarRatingFilter
+              selectedStars={selectedStars}
+              onChange={handleStarsChange}
+            />
+            <HotelTypesFilter
+              selectedHotelTypes={selectedHotelTypes}
+              onChange={handleHotelTypeChange}
+            />
+            <FacilitiesFilter
+              selectedFacilities={selectedFacilities}
+              onChange={handleFacilitiesChange}
+            />
+            <PriceFilter
+              selectedPrice={selectedPrice}
+              onChange={(value?: number) => {
+                setSelectedPrice(value);
+              }}
+            />
+          </div>
+        </div>
+      )}
 
       <div className="flex flex-col gap-5">
         <div className="flex justify-between items-center">
