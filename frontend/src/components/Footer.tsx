@@ -6,7 +6,7 @@ const Footer = () => {
   return (
     <div className="bg-indigo-800 py-10">
       <div className="md:container mx-auto flex flex-col md:flex-row">
-        <div className="text-white font-medium md:w-3/4 bg-indigo-700 p-4 max-md:mx-3 max-md:mb-4 rounded-md">
+        <div className="text-white font-medium md:w-3/4 bg-indigo-900 p-4 max-md:mx-3 max-md:mb-4 rounded-md">
           <div className="text-3xl mb-3 pb-1 border-b-4 border-yellow-400 w-3/4 font-bold">
             About Us
           </div>
@@ -37,7 +37,7 @@ const Footer = () => {
             Hotelify, reaching potential guests has never been easier. Simply
             create your account, add your hotel details, and start welcoming
             guests from around the world.
-            <div className="mt-2 text-yellow-100">
+            <div className="mt-2">
               <span className="text-xl font-semibold text-yellow-300">
                 Empower{" "}
               </span>
